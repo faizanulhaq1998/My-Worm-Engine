@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deriv Worm Engine V3 — PDF Machine Learner</title>
+  <style>
+    :root{--bg:#07122a;--card:#0f1724;--accent:#10b981;--danger:#ef4444;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;margin:0;background:linear-gradient(180deg,#051226 0%, #07122a 100%);color:#e6eef8}
+    .wrap{max-width:1180px;margin:22px auto;padding:18px;display:grid;grid-template-columns:360px 1fr;gap:18px}
+    .card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+    h2{margin:0 0 8px;font-size:16px}
+    label{display:block;font-size:12px;color:var(--muted);margin-top:8px}
+    input,select,button{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .row{display:flex;gap:8px}
+    #wormCanvas{width:100%;height:140px;border-radius:8px;background:var(--glass);display:block}
+    .signal{display:flex;align-items:center;gap:10px;font-weight:700}
+    .green{color:var(--accent)}.red{color:var(--danger)}.neutral{color:var(--muted)}
+    .logs{height:220px;overflow:auto;padding:8px;background:rgba(0,0,0,0.12);border-radius:8px;font-family:monospace;font-size:12px}
+    .digits{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .digit-pill{min-width:28px;padding:6px 8px;border-radius:8px;text-align:center;font-weight:700}
+    footer{margin-top:16px;color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h2>PDF Machine Learner (V3)</h2>
+      <label>Upload Strategy PDF</label>
+      <input id="pdfFile" type="file" accept="application/pdf" />
+      <div class="row" style="margin-top:8px">
+        <label style="display:flex;align-items:center;gap:8px"><input id="autoApplyPdf" type="checkbox" /> Auto-activate</label>
+        <button id="btnParsePdf">Parse PDF</button>
+        <button id="btnApplyPdf">Apply Rules</button>
+      </div>
+      <pre id="pdfPreview" class="logs" style="height:120px"></pre>
+      <hr style="margin:12px 0"/>
+      <h2>Connection</h2>
+      <label>Deriv API Token</label>
+      <input id="apiToken" placeholder="Enter Deriv Token" />
+      <label>Server</label>
+      <select id="server"><option value="wss://ws.binaryws.com/websockets/v3?app_id=1089">Deriv Public (v3)</option></select>
+      <div class="row" style="margin-top:10px">
+        <button id="btnConnect">Connect</button>
+        <button id="btnAuthorize">Authorize</button>
+        <button id="btnDisconnect">Disconnect</button>
+      </div>
+      <hr/>
+      <h2>Signals</h2>
+      <div class="signal">Status: <span id="signalLabel" class="neutral">Disconnected</span></div>
+      <canvas id="wormCanvas"></canvas>
+      <div style="margin-top:10px">
+        Prev: <span id="prevDigit">-</span> · Curr: <span id="currDigit">-</span> · Worm: <span id="wormVal">-</span><br>
+        Prediction: <span id="predDigit">-</span> (<span id="predConf">-</span>%)<br>
+        5-tick: <span id="suggested5">-</span>
+      </div>
+      <div class="digits" id="recentDigits"></div>
+    </div>
+    <div class="card">
+      <h2>Logs</h2>
+      <div class="logs" id="log"></div>
+    </div>
+  </div>
+
+<script src="https://github.com/faizanulhaq1998/Deriv-BOT/blob/d89936e0994bd27a39100af98342b645ac46899c/nikolas.pdf"></script>
+  
+ <script src="v3_engine_full.js"></script>
+
+</body>
+</html>
